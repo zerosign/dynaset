@@ -1,10 +1,13 @@
+require 'dynaset/manager/manager'
+
 module Dynamic
   module Hook
-
-
     class Settings
 
       attr_reader :namespace
+      attr_reader :updated_at
+
+      SettingsManager = Dynamic::Manager::SettingsManager
 
       #
       # Intialize the Settings with default data.
@@ -15,6 +18,7 @@ module Dynamic
           @data = Hash.new(MessagePack.unpack(SettingsManager.get!(namespace)))
         else
           @data = resolve(data, SettingsManager.get!(namespace))
+          @updated_at = @data.delete(:updated_at)
           SettingsManager.set!(namespace, MessagePack.pack(data))
         end
       end
@@ -26,9 +30,9 @@ module Dynamic
       def get!(key)
         if @data.empty?
           @data = resolve(data, SettingsManager.get!(namespace))
-          SettingsManager.set!(namespace, MessagePack.pack(data))
+          @updated_at = @data.delete(:updated_at)
         else
-          MessagePack.unpack(@data)[key.to_sym]
+          @data[key.to_sym]
         end
       end
 
@@ -38,6 +42,7 @@ module Dynamic
       #
       def set!(key, value)
         @data[key.to_sym] = value
+        SettingsManager.set!(namespace, MessagePack.pack(@data))
       end
 
       #
@@ -48,6 +53,7 @@ module Dynamic
       def resolve(left, right)
         case right
         when nil then left
+        when {} then left
         else
           if left[:updated_at] && right[:updated_at] &&
              left[:updated_at] < right[:updated_at]

@@ -1,0 +1,14 @@
+source 'https://rubygems.org'
+
+group :development do
+  gem 'sinatra'
+  gem 'sinatra-contrib'
+  gem 'thin'
+  gem 'concurrent-ruby', require: 'concurrent'
+  gem 'dynaset', path: '../'
+  gem 'yajl'
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'redis'
+  gem 'connection_pool'
+end

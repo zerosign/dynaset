@@ -35,4 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'connection_pool'
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'rb-inotify'
+  spec.add_development_dependency 'diplomat'
 end

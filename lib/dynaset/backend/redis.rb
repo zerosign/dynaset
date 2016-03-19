@@ -49,7 +49,7 @@ module Dynamic
         data = @instance.with do |client|
           client.get key
         end
-        JSON.parse(data, symbolize_names: true)
+        data && JSON.parse(data, symbolize_names: true)
       end
 
       def journal

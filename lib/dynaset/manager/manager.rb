@@ -1,3 +1,5 @@
+require 'pry'
+
 module Dynamic
   module Manager
     class SettingsManager
@@ -31,12 +33,13 @@ module Dynamic
           # TODO : pass the options into backend initialize
           # options ||= { namespace: 'plugins.', host: '127.0.0.1', timeout: 1, size: 10 }
           # options.keep_if {|key| [:timeout, :host, :size].include? key }
+
           # Backend = ConnectionPool.new(options) do
           #   Redis.new(options[:host])
           # end
 
           const_set :NAMESPACE, options[:namespace]
-          const_set :BACKEND, Backend
+          const_set :BACKEND, options[:backend]
           const_set :LISTENERS, {}
 
           Kernel.at_exit do
@@ -45,6 +48,7 @@ module Dynamic
             const_set :NAMESPACE, nil
           end
         end
+
 
         def set!(key, value)
           backend.set!(key, value)
