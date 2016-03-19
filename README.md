@@ -5,48 +5,33 @@
 their runtime settings and provide a way to do runtime handling without need
 to redeployment and still keep I/O overhead smaller as possible (the only overhead
 are there will be dedicated thread that will maintain the business logic of watching
-over namespace).
+over namespace). The logic of `settings` resolver are being based on `updated_at` value
+on each backend journal.
 
 Every operations inside of this gems remains to be safe and always want to be
 safe as safe as possible without impacting some performance.
 
-## Installation
+This gems will trying to support between different backend, including :
 
-Add this line to your application's Gemfile:
+### Remote:
+- Redis
+- Consul
 
-```ruby
-gem 'dynaset'
-```
+### Local:
+- Dotenv
+- Path
 
-And then execute:
+# Status
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install dynaset
-
-## Usage
-
-This gem will provide a way to have a runtime settings with less
-overhead in I/O.
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies.
-Then, run `rake spec` to run the tests. You can also run `bin/console`
-for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`.
-To release a new version, update the version number in `version.rb`, and then
-run `bundle exec rake release`, which will create a git tag for the version,
-push git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
+The core implementation are still on going. Please comeback after an awhile :+1:.
 
 ## TODO
 
+- Move several resolver logics into manager (branch: develop)
+- Implement the basic functionality using redis (branch: develop)
 - Provide an easily reusable view that can be used view in Rails or rack equivalent views
   to control behavior of the variables.
+
 
 ## Contributing
 
